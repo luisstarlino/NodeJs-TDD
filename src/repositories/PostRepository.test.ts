@@ -30,7 +30,7 @@ describe('PostRepository', () => {
     const postRepository = new PostRepository(managerMock);
 
     // ===== ACT
-    const result = await postRepository.save();
+    const result = await postRepository.save(mockPost);
 
     // ==== ASSERT
     expect(managerMock.save).toHaveBeenCalled();
