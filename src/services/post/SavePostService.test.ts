@@ -10,7 +10,7 @@ import { SavePostService } from './SavePostService';
 import { Post } from '../../entities/Post';
 import { PostRepository } from '../../repositories/PostRepository';
 
-// ===== setting to use mock instead off repository 
+// ===== mocking the repository instead of the real repository 
 jest.mock('../../repositories/PostRepository')
 const postRepositoryMock = require('../../repositories/PostRepository')
 
