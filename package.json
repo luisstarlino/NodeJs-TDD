@@ -15,6 +15,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .js,.ts ."
   },
+  "type": "commonjs",
   "keywords": [],
   "author": "",
   "license": "ISC",

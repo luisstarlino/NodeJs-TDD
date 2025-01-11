@@ -1,4 +1,10 @@
-module.exports = {
+/*****************************************************************************************
+* @Author: Luis Starlino
+* @Date: 2025-01-11 18:10
+*****************************************************************************************/
+
+
+export default {
   type: 'sqlite',
   database: process.env.PORT === 5001 ? './src/database/database.test.sqlite' : './src/database/database.sqlite',
   entities: [
