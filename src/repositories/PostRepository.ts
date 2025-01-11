@@ -3,14 +3,20 @@ import { Post } from '../entities/Post'
 
 @EntityRepository(Post)
 export class PostRepository {
-    private manager: EntityManager;
+  private manager: EntityManager;
 
-    constructor (manager: EntityManager) {
-      this.manager = manager
-    }
+  constructor(manager: EntityManager) {
+    this.manager = manager
+  }
 
-    getAll = async (): Promise<Array<Post>> => {
-      const posts: Post[] = await this.manager.find(Post)
-      return posts
-    }
+  getAll = async (): Promise<Array<Post>> => {
+    const posts: Post[] = await this.manager.find(Post)
+    return posts
+  }
+
+  //@LuisStarlino 2025-05-01
+  save = async (newP: Post): Promise<Post> => {
+    const newPost: Post = await this.manager.save(newP);
+    return newPost;
+  }
 }
