@@ -26,21 +26,22 @@ describe('/posts', () => {
 
   })
 
-  // it('Should return status 200 when post saved', async () => {
-  //   const response = await server.post('/post', {
-  //     "author": "luis@starlino.com",
-  //     "content": "integration test"
-  //   })
+  // @LuisStarlino
+  it('Should return status 200 when post saved', async () => {
+    const response = await server.post('/posts', {
+      "author": "luis@starlino.com",
+      "content": "integration test"
+    })
 
-  //   // TODO: Make the correct integration with the delete route!
-  //   const connection = await createConnection();
-  //   await connection.query(`DELETE FROM posts WHERE post_id = ${response.data.post_id}`);
-  //   await connection.close();
+    // TODO: Make the correct integration with the delete route!
+    const connection = await createConnection();
+    await connection.query(`DELETE FROM posts WHERE post_id = '${response.data.post_id}'`);
+    await connection.close();
 
-  //   expect(response.status).toBe(201);
-  //   expect(response.data).toMatchObject({
-  //     "author": "luis@starlino.com",
-  //     "content": "integration test"
-  //   });
-  // })
+    expect(response.status).toBe(201);
+    expect(response.data).toMatchObject({
+      "author": "luis@starlino.com",
+      "content": "integration test"
+    });
+  })
 })
