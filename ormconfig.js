@@ -3,17 +3,21 @@
 * @Date: 2025-01-11 18:10
 *****************************************************************************************/
 
+// --- GET A CURRENT URL
+const isTestEnvironment = process.env.PORT === '5001';
 
-export default {
+console.log(`🔵 isTestEnvironment: ${isTestEnvironment}`);
+
+module.exports = {
   type: 'sqlite',
-  database: process.env.PORT === 5001 ? './src/database/database.test.sqlite' : './src/database/database.sqlite',
+  database: isTestEnvironment ? './src/database/database.test.sqlite' : './src/database/database.sqlite',
   entities: [
-    process.env.PORT === 5001
+    isTestEnvironment
       ? 'src/entities/*.ts'
       : 'build/entities/*.js'
   ],
   migrations: [
-    process.env.PORT === 5001
+    isTestEnvironment
       ? 'src/database/migrations/*.ts'
       : 'build/database/migrations/*.js'
 
