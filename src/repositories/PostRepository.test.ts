@@ -37,4 +37,24 @@ describe('PostRepository', () => {
     expect(result).toMatchObject(mockPost);
 
   });
+
+  it('Should call deleted method, receive the post_id and return the deleted post', async () => {
+
+    // ===== ARRANGE
+    const mockPost = getMockSinglePost();
+
+    const managerMock = await getManagerMock({ deleteReturn: mockPost, findOneReturn: mockPost });
+
+    const postRepository = new PostRepository(managerMock);
+
+    // ===== ACT
+    const result = await postRepository.delete(mockPost.post_id);
+
+    // ==== ASSERT
+    expect(managerMock.findOne).toHaveBeenCalled();
+    expect(managerMock.delete).toHaveBeenCalled();
+    expect(result).toMatchObject(mockPost);
+
+
+  })
 })

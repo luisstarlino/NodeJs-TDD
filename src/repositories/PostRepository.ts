@@ -19,4 +19,19 @@ export class PostRepository {
     const newPost: Post = await this.manager.save(newP);
     return newPost;
   }
+
+  //@LuisStarlino 2025-05-01
+  delete = async (post_id: string): Promise<Post> => {
+
+    // ===== FIND FIRST
+    const postToDelete = await this.manager.findOne(Post, { where: { post_id } });
+
+    if(!postToDelete) return null;
+
+    await this.manager.delete(Post, {post_id});
+
+    return postToDelete;
+
+  }
+
 }
