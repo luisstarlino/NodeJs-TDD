@@ -1,32 +1,27 @@
 /*****************************************************************************************
 * @Author: Luis Starlino
-* @Date: 2025-01-05 17:42
+* @Date: 2025-01-12 07:55
 *****************************************************************************************/
 
 // ===== IMPORTS
-import { PostRepository } from "../../repositories/PostRepository";
-import type { ISavePostService } from "../../interfaces";
+import  { PostRepository } from "../../repositories/PostRepository";
+import type { IDeletePostService } from "../../interfaces";
 import { getCustomRepository } from "typeorm";
 import { Post } from "../../entities/Post";
 
-
-
-export class SavePostService {
-    private _postRepository: PostRepository
-    private _post: Post;
+export class DeletePostService {
+    private _postRepository: PostRepository;
+    private _postId: string
 
     constructor({
         postRepository = getCustomRepository(PostRepository),
-        author,
-        content
-    }: ISavePostService) {
+        postId,
+    } : IDeletePostService) {
+        this._postId = postId,
         this._postRepository = postRepository
-        this._post = new Post(author, content)
-
     }
 
     async execute(): Promise<Post> {
-        return await this._postRepository.save(this._post);
+        return await this._postRepository.delete(this._postId);
     }
-
 }
