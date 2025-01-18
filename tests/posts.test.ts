@@ -1,11 +1,19 @@
 import axios from 'axios'
-import  createConnection from '../src/database/index';
+import createConnection from '../src/database/index';
 
 const server = axios.create({
   baseURL: 'http://localhost:5001/v1'
 })
 
 describe('/posts', () => {
+
+
+  // ===== CONSTS
+  const mockPost = {
+    "author": "luis@starlino.com",
+    "content": "integration test"
+  }
+
   it('Should return status 200 and list of posts', async () => {
     const expectedResponse = [
       {
@@ -28,10 +36,7 @@ describe('/posts', () => {
 
   // @LuisStarlino
   it('Should return status 200 when post saved', async () => {
-    const response = await server.post('/posts', {
-      "author": "luis@starlino.com",
-      "content": "integration test"
-    })
+    const response = await server.post('/posts', mockPost)
 
     // TODO: Make the correct integration with the delete route!
     const connection = await createConnection();
@@ -44,4 +49,21 @@ describe('/posts', () => {
       "content": "integration test"
     });
   })
+
+  it('Should return status 200 when delete a post', async () => {
+    const createResponse = await server.post('/posts', mockPost);
+
+    const deleteResp = await server.delete(`/posts/${createResponse.data?.post_id}`);
+
+    expect(deleteResp.status).toBe(200);
+    expect(deleteResp.data).toMatchObject({
+      "message": "Post deleted!",
+      "postDeleted": {
+        ...mockPost,
+        post_id: createResponse.data?.post_id
+      }
+    });
+
+
+  });
 })
