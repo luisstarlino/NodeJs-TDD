@@ -1,5 +1,7 @@
 import { SavePostController } from "./SavePostController";
+import { DeletePostController } from "./DeletePostController";
 
 export {
-    SavePostController
+    SavePostController,
+    DeletePostController
 }

@@ -6,9 +6,7 @@
 // ===== IMPORTS
 import { getMockSinglePost } from '../../__mocks__/getMockSinglePost';
 import { makeMockResponse } from '../../__mocks__/mockResponse';
-import { Post } from '../../entities/Post';
 import { SavePostController } from '../post';
-
 import { Request } from 'express';
 
 // ===== mocking the service instead of call the real one
