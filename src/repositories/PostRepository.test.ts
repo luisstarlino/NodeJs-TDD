@@ -5,7 +5,10 @@ import { getMockSinglePost } from '../__mocks__/getMockSinglePost'
 import { PostRepository } from './PostRepository'
 
 describe('PostRepository', () => {
-  const mockPostList: Post[] = getMockContentList()
+
+  const mockPostList: Post[] = getMockContentList();
+  const mockPost = getMockSinglePost();
+
 
   it('should call getAll method and return all posts', async () => {
     const managerMock = await getManagerMock({
@@ -23,8 +26,6 @@ describe('PostRepository', () => {
   it('should call save method and return a new post', async () => {
 
     // ===== ARRANGE
-    const mockPost = getMockSinglePost();
-
     const managerMock = await getManagerMock({ saveReturn: mockPost });
 
     const postRepository = new PostRepository(managerMock);
@@ -41,8 +42,6 @@ describe('PostRepository', () => {
   it('Should call deleted method, receive the post_id and return the deleted post', async () => {
 
     // ===== ARRANGE
-    const mockPost = getMockSinglePost();
-
     const managerMock = await getManagerMock({ deleteReturn: mockPost, findOneReturn: mockPost });
 
     const postRepository = new PostRepository(managerMock);
@@ -55,6 +54,35 @@ describe('PostRepository', () => {
     expect(managerMock.delete).toHaveBeenCalled();
     expect(result).toMatchObject(mockPost);
 
-
   })
+
+  it('Should call list-by-postid method, receive the post_id and return a single post', async () => {
+
+    // ===== ARRANGE
+    const managerMock = await getManagerMock({ findOneReturn: mockPost });
+    const postRepository = new PostRepository(managerMock);
+
+    // ===== ACT
+    const result = await postRepository.findByPostId(mockPost.post_id);
+
+    // ===== ASSERT
+    expect(managerMock.findOne).toHaveBeenCalled();
+    expect(result).toMatchObject(mockPost);
+
+  });
+
+  it('Should call list-by-postid method, receive a post_id and not found a match for this id', async () => {
+
+    // ===== ARRANGE
+    const managerMock = await getManagerMock({ findOneReturn: undefined });
+    const postRepository = new PostRepository(managerMock);
+
+    // ===== ACT
+    const result = await postRepository.findByPostId(mockPost.post_id);
+
+    // ===== ASSERT
+    expect(managerMock.findOne).toHaveBeenCalled();
+    expect(result).toBeUndefined();
+
+  });
 })

@@ -26,12 +26,18 @@ export class PostRepository {
     // ===== FIND FIRST
     const postToDelete = await this.manager.findOne(Post, { where: { post_id } });
 
-    if(!postToDelete) return null;
+    if (!postToDelete) return null;
 
-    await this.manager.delete(Post, {post_id});
+    await this.manager.delete(Post, { post_id });
 
     return postToDelete;
 
+  }
+
+  //@LuisStarlino 2025-01-18
+  findByPostId = async (post_id: string): Promise<Post> => {
+    const foundPost = await this.manager.findOne(Post, { where: { post_id } });
+    return foundPost;
   }
 
 }

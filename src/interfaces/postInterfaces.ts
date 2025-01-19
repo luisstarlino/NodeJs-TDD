@@ -10,3 +10,8 @@ export interface IDeletePostService {
     postRepository?: PostRepository,
     postId: string   
 }
+
+export interface IFindPostService {
+    postRepository?: PostRepository,
+    postId: string   
+}

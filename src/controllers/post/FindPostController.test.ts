@@ -1,20 +1,21 @@
 /*****************************************************************************************
 * @Author: Luis Starlino
-* @Date: 2025-01-12 12:30
+* @Date: 2025-01-19 07:56
 *****************************************************************************************/
 
 // ===== IMPORTS
 import { getMockSinglePost } from "../../__mocks__/getMockSinglePost";
 import { makeMockResponse } from "../../__mocks__/mockResponse";
-import { DeletePostController } from './index';
+import { FindPostController } from './index';
 import { Request } from 'express';
 
 // ===== mocking the service instead of call the real one
 let mockExecute = jest.fn();
 
-jest.mock('../../services/post/DeletePostService', () => {
+
+jest.mock('../../services/post/FindPostService', () => {
     return {
-        DeletePostService: jest.fn().mockImplementation(() => {
+        FindPostService: jest.fn().mockImplementation(() => {
             return {
                 execute: mockExecute
             }
@@ -22,29 +23,29 @@ jest.mock('../../services/post/DeletePostService', () => {
     }
 })
 
-describe('DeletePostController', () => {
-    const deletedPost = getMockSinglePost();
+describe('FindPostController', () => {
+    const foundPost = getMockSinglePost();
 
-    it('Should return a status 200 when the post was found and deleted', async () => {
+    it('Should return a status 200 when the post was found by id', async () => {
         // ===== Arrange
-        mockExecute = jest.fn().mockResolvedValue(deletedPost);
-        const deletePostController = new DeletePostController();
+        mockExecute = jest.fn().mockResolvedValue(foundPost);
+        const findPostController = new FindPostController();
 
         // ===== mocking the request and response
         const request = {
-            params: { postId: "123" },
+            params: { postId: foundPost.post_id },
             get: jest.fn(),
         } as Partial<Request> as Request;
-        
+
 
         const response = makeMockResponse();
 
         // ===== Act
-        await deletePostController.handle(request, response);
+        await findPostController.handle(request, response);
 
         // ===== Assert
         expect(mockExecute).toHaveBeenCalled();
-        expect(response.state.json).toMatchObject({message: "Post deleted!", postDeleted: deletedPost});
+        expect(response.state.json).toMatchObject(foundPost);
         expect(response.state.status).toBe(200);
 
     })

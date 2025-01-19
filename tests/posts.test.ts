@@ -63,7 +63,23 @@ describe('/posts', () => {
         post_id: createResponse.data?.post_id
       }
     });
+  });
 
+  it('Should return status 200 when find a post by id', async () => {
+
+    // ===== Create new one
+    const createResponse = await server.post('/posts', mockPost);
+    const { post_id } = createResponse.data;
+
+    // ===== Main Test
+    const findPost = await server.get(`/posts/${post_id}`);
+
+    expect(findPost.status).toBe(200);
+    expect(findPost.data).toMatchObject(findPost.data);
+
+    // ===== Delete the test
+    await server.delete(`/posts/${post_id}`);
 
   });
+
 })
