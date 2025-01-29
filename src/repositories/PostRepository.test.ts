@@ -85,4 +85,21 @@ describe('PostRepository', () => {
     expect(result).toBeUndefined();
 
   });
+
+  it('Should call update method, receive a post_id and update a post', async () => {
+
+    // ===== ARRANGE
+    const { author, content } = mockPost;
+    const managerMock = await getManagerMock({ findOneReturn: mockPost, updateReturn: mockPost });
+    const postRepository = new PostRepository(managerMock);
+
+    // ===== ACT
+    const result = await postRepository.findAndUpdate(mockPost.post_id, {author, content});
+
+    // ===== ASSERT
+    expect(managerMock.findOne).toHaveBeenCalled();
+    expect(managerMock.update).toHaveBeenCalled();
+    expect(result).toMatchObject(mockPost);
+
+  });
 })

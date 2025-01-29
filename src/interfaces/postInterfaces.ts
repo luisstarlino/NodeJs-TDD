@@ -1,3 +1,4 @@
+import { Post } from "../entities/Post";
 import { PostRepository } from "../repositories/PostRepository";
 
 export interface ISavePostService {
@@ -14,4 +15,10 @@ export interface IDeletePostService {
 export interface IFindPostService {
     postRepository?: PostRepository,
     postId: string   
+}
+
+export interface IUpdatePostService {
+    postRepository?: PostRepository,
+    postId: string,
+    newValues: Post
 }
