@@ -44,10 +44,14 @@ export class PostRepository {
   findAndUpdate = async (post_id: string, { author, content }: { author?: string, content?: string }): Promise<Post> => {
     // ===== FIND FIRST
     const postToUpdate = await this.manager.findOne(Post, { where: { post_id } });
-
     if (!postToUpdate) return null;
 
-    await this.manager.update(Post, { post_id }, { content, author });
+    const updatedData = {
+      author: author ?? postToUpdate.author,
+      content: content ?? postToUpdate.content
+    }
+
+    await this.manager.update(Post, { post_id }, updatedData);
 
     const updated = await this.manager.findOne(Post, { where: { post_id } });
     return updated;
