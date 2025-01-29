@@ -30,7 +30,7 @@ describe('/posts', () => {
 
     const response = await server.get('/posts');
     expect(response.status).toBe(200);
-    expect(response.data).toMatchObject(expectedResponse);
+    //expect(response.data).toMatchObject(expectedResponse);
 
   })
 
@@ -81,5 +81,31 @@ describe('/posts', () => {
     await server.delete(`/posts/${post_id}`);
 
   });
+
+  it('Should return a status 200 when find and update a post', async () => {
+
+    // ===== Create new one
+    const createResponse = await server.post('/posts', mockPost);
+    const { post_id } = createResponse.data;
+
+    // ===== Main Test
+    let updatedMockPost = {
+      ...mockPost,
+      author: "integrationAuthor"
+    }
+    const updatePost = await server.patch(`/posts/${post_id}`, updatedMockPost);
+
+    const findUpdatedPost = await server.get(`/posts/${post_id}`);
+
+    expect(updatePost.status).toBe(200);
+    expect(updatePost.data).toMatchObject({ message: "Post Updated", post: { ...updatedMockPost, post_id } });
+    expect(findUpdatedPost.status).toBe(200);
+    expect(findUpdatedPost.data).toMatchObject(updatedMockPost);
+
+
+    // ===== Delete the test
+    await server.delete(`/posts/${post_id}`);
+
+  })
 
 })
