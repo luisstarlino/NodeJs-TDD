@@ -14,14 +14,24 @@ export class ExtractNotesController {
 
         // ==== INITAL VALUES
         var responseModel = new HttpHelper();
-        const { content } = req.body;
+        const { content, author } = req.body;
+
 
         try {
-            const serviceAI = new ExtractNotesService({ content });
-            const responseAI = await serviceAI.execute();
 
-            if(responseAI) responseModel.ok(responseAI)
-            else responseModel.noContent();
+            if (!content || !author) responseModel.badRequest("content and author can't be null");
+            else {
+
+
+                const serviceAI = new ExtractNotesService({ content, author });
+                const responseAI = await serviceAI.execute();
+
+
+
+                if (responseAI) responseModel.ok({ message: `All done, created ${responseAI.length} ${responseAI.length == 1 ? 'task' : 'tasks'}`, tasks: responseAI })
+                else responseModel.noContent();
+            }
+
 
         } catch (error) {
             responseModel.serverError(error?.toString());

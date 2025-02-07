@@ -1,3 +1,4 @@
 export interface IExtractNote {
-    content: string   
+    content: string;
+    author: string;
 }
