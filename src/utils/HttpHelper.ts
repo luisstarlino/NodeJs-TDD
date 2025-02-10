@@ -29,6 +29,11 @@ export class HttpHelper {
         this.data = data;
     }
 
+    async badRequest(message?: string) {
+        this.code = 400;
+        this.data = { message }
+    }
+
 }
 
 // const OK = async (data: any): Promise<BaseResponseAPI> => {

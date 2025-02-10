@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "express": "^4.17.2",
+    "openai": "^4.82.0",
     "reflect-metadata": "^0.1.13",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2",

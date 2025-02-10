@@ -1,141 +1,153 @@
-# TwiDIO API
+# ✅ TASK API (With TDD)
 
-#### API desenvolvida para o projeto TwiDIO
+A scalable API for managing tasks, built with a Test-Driven Development (TDD) approach.
 
-### Arquitetura
+## 🚀 Features
 
-#### 📂Controllers
-> Aplica validações necessárias na requisição.
-#### 📂Services
-> Aplica regras de negócios antes de enviar ao repositório.
-#### 📂Repositories
-> Salva os dados no banco de dados.
-#### 📂Entities
-> Gerencia a estrutura das entidades da aplicação.
-#### 📂Database
-> Cria as conexões necessárias com o banco de dados.
+- 💻 **Artificial intelligence for creating tasks from free speech**
+- 📝 **Create, Read, Update, and Delete (CRUD) tasks**
+- 🧪 **Fully tested with TDD methodology**
+- 🔒 **User authentication & authorization**
+- 📌 **Category-based task organization**
+- ✅ **Task completion tracking**
 
-#### 📂__mocks __
-> Armazena os dados e mocks utilizados nos testes unitários.
-#### 📂tests
-> Armazena as switch de testes de integração.
+## 🛠️ Technologies
 
-```
- 📁 TwiDIO
-   |
-   |-  📁 src
-   |    |
-   |    |- 📁 __mocks_
-   |         |- 📄 getEntityManagerMock.ts
-   |         |- 📄 mockContentList.ts
-   |         |- 📄 mockRequest.ts
-   |         |- 📄 mockResponse.ts
-   |
-   |    |- 📁 database
-   |         |- 📁 migrations
-   |         |- 📄 index.ts
-   |         |- 📄 database.sqlite
-   |         |- 📄 database.test.sqlite
-   |
-   |    |- 📁 controllers
-   |         |- 📄 GetAllPostController.ts
-   |         |- 📄 MessageController.ts
-   |
-   |    |- 📁 entities
-   |         |- 📄 Post.ts
-   |
-   |    |- 📁 repositories
-   |         |- 📄 PostRepository.ts
-   |
-   |    |- 📁 services
-   |         |- 📄 GetAllPostService.ts
-   |
-   |    |- 📁 tests
-   |         |- 📄 posts.test.ts
-   |
-   |
-   |- 📄 .gitignore
-   |- 📄 package.json
-   |- 📄 app.ts
-   |- 📄 index.ts
-   |- 📄 router.ts
+- **💻 Backend:** Node.js, Express.js
+- **📱 Database:** SQLite, TypeORM
+- **🔍 Testing:** Jest, Supertest
 
+## 📦 Installation
+
+```bash
+git clone https://github.com/luisstarlino/NodeJs-TDD
+cd NodeJs-TDD
+npm install
 ```
 
-### Este projeto usa
-- Node
-- Typescript
-- Jest
-- SQLite
-- TypeORM
+## ⚙️ Environment Variables
 
-### Como rodar o projeto
+Create a `.env` file in the root directory and configure the following variables:
 
-1 - Clone o repositório
+```env
+PORT=3000
+OPENAI_API_KEY=your_openAI_secret
+```
 
-2 - Instale todas as dependências
+## ▶️ Running the API
 
----
-    yarn install
----
+### Development Mode
 
-4 - Acesse a rota principal
+```bash
+npm run dev #or yarn dev
+```
 
-<http://localhost:5000/v1/>
+### Running Tests
 
-### Testando o projeto
+```bash 
+npm test #or yarn test
+```
 
-#### Testes unitários
 
----
-    yarn test:unit
----
+## 📖 API Documentation
 
-#### Testes de integração
+### 🔹 Get All Posts
 
-1 - Rode a aplicação em modo de desenvolvimento
+```http
+GET /api/posts
+```
 
----
-    yarn run dev
----
+Response:
 
-1 - Rode os testes de integração no repositório /tests
+```json
+[
+ {
+    "post_id": "11f8ad35-c86c-49dc-9c8b-ef31cb1e758f",
+    "author": "user@dio.me",
+    "content": "User about DIO"
+  },
+  {
+    "post_id": "bcb12d42-a99f-4c96-9bf4-070802c961a4",
+    "author": "luis@gmail.com",
+    "content": "Updated!"
+  }
+]
+```
 
----
-    yarn test:integration
----
+### 🔹 Create a Post
 
-### endpoints
+```http
+POST /api/post
+```
 
-**_GET_** /posts
+Request:
 
-Retorna todos os posts criados no banco de dados
+```json
+{
+  "author":"luis.starlino@gmail.com",
+  "content": "create this post!"
+}
+```
 
-##### Exemplo
+Response:
 
----
-    http://localhost:5000/v1/posts
----
+```json
+{
+  "id": "2",
+  "author": "luis.starlino@gmail.com",
+  "content": "create this post!"
+}
+```
 
-**_POST_** /posts (em desenvolvimento)
+### 🔹 Create Posts By AI
+```http
+POST /api/posts/ai
+```
 
-Cria um novo post no banco de dados. Todos os campos são obrigatórios
+Request:
 
-##### Exemplo
+```json
+{
+ "content": "Tomorrow i have to go to the market, to buy the week's fruit, visit my father on the way back and then pick up the children from school",
+  "author": "test@ai.com"
+}
+```
+Response:
 
----
-    body {
-        author: 'author@email.com',
-        content: 'Tuite de exemplo'
+```json
+{
+  "message": "All done, created 3 tasks",
+  "tasks": [
+    {
+      "post_id": "b2832611-be86-4916-9d0b-fc01c5c4f535",
+      "author": "test@ai.com",
+      "content": "go to the market to buy the week's fruit"
+    },
+    {
+      "post_id": "e8b1bc8a-b2cc-4e38-b78e-db48dc5a3127",
+      "author": "test@ai.com",
+      "content": "visit my father on the way back"
+    },
+    {
+      "post_id": "8ad5a6b9-cdd6-4643-acb7-52a97b85daaa",
+      "author": "test@ai.com",
+      "content": "pick up the children from school"
     }
+  ]
+}
+```
+
+*For more details, check the full API documentation.*
+
+## 🎯 Contributing
+
+Feel free to submit issues and pull requests! 🚀
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
 ---
 
-**Desafios sugeridos**
+🔥 **Task API (With TDD) – A scalable, test-driven approach to task management!**
 
-- Usando os conceitos de TDD
-
-[ ] Implementar uma rota que retorne todos os posts de um usuário
-
-[ ] Implementar uma rota que permita excluir um post
-
-### Happy hacking!
